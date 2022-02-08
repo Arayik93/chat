@@ -14,15 +14,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    broadcast(new \App\Events\MessageEvent(['room_id' => 12, "body" => "hello word"]));
+
     return view('welcome');
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']],function (){
     Route::get("/dashboard",[\App\Http\Controllers\DashboardController::class,'dashboard'])->name('dashboard');
-    Route::get("/send/message",[\App\Http\Controllers\MessageController::class,'sendMessage'])->name('send.message');
+    Route::post("/send/message",[\App\Http\Controllers\MessageController::class,'sendMessage'])->name('send.message');
+    Route::post("/new/room",[\App\Http\Controllers\MessageController::class,'newRoom'])->name('new.room');
 
 
 //    Route::get('/users','DashboardController@dashboard')->name('users');
     Route::get('/send', function () {
+        broadcast(new \App\Events\MessageEvent(['room_id' => 12, "body" => "hello word"]));
     })->name('send');
 });

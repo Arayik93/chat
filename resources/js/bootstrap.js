@@ -28,11 +28,13 @@ window.Echo = new Echo({
     wsHost: window.location.hostname,
     wsPort: 6001,
     forceTLS: false,
-    disableStats: true,
+    disableStats: false,
 });
 
-console.log(145);
 
-window.Echo.channel("channel").listen(".message" ,(e) => {
-        console.log(e);
-    })
+console.log(100);
+
+window.Echo.channel("room_"+12).listen("new_message" ,(e) => {
+    console.log(e);
+})
+
